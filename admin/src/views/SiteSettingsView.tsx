@@ -94,11 +94,11 @@ export const SiteSettingsView: React.FC = () => {
   };
 
   if (loading || !info) {
-    return <p className="pt-36 sm:pt-24 text-center text-sm text-neutral-500">جارٍ التحميل...</p>;
+    return <p className="pt-16 sm:pt-12 text-center text-sm text-neutral-500">جارٍ التحميل...</p>;
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f7f8] pt-36 sm:pt-24 pb-16 px-6 lg:px-10 max-w-4xl mx-auto space-y-8" dir="rtl">
+    <div className="min-h-screen bg-[#f7f7f8] pt-16 sm:pt-12 pb-16 px-6 lg:px-10 max-w-4xl mx-auto space-y-8" dir="rtl">
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-semibold text-neutral-900 flex items-center gap-3">
           <Building2 className="w-6 h-6 text-[#a98136]" /> إعدادات الموقع

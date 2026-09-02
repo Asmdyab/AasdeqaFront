@@ -84,7 +84,7 @@ export const BrandsView: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f7f8] pt-36 sm:pt-24 pb-16 px-6 lg:px-10 max-w-5xl mx-auto" dir="rtl">
+    <div className="min-h-screen bg-[#f7f7f8] pt-16 sm:pt-12 pb-16 px-6 lg:px-10 max-w-5xl mx-auto" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-display text-2xl font-semibold text-neutral-900 flex items-center gap-3">
           <Tag className="w-6 h-6 text-[#a98136]" /> الماركات ({brands.length})

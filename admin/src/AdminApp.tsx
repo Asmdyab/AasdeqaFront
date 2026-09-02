@@ -205,16 +205,16 @@ const AdminTopBar: React.FC<{
   onEnablePush?: () => void;
   onTestPush?: () => void;
 }> = ({ view, setView, onLogout, badge = 0, pushStatus = 'default', onEnablePush, onTestPush }) => (
-  <div className="apex-admin-toolbar fixed top-0 inset-x-0 z-[100] bg-white/95 backdrop-blur border-b border-neutral-200 px-4 py-2 flex items-center gap-3 shadow-lg flex-wrap" dir="rtl">
-    <span className="font-bold text-sm text-[#a98136]">لوحة تحكم الأصدقاء</span>
-    <div className="flex items-center gap-1 flex-wrap">
+  <div className="apex-admin-toolbar fixed top-0 inset-x-0 z-[100] bg-white/95 backdrop-blur border-b border-neutral-200 shadow-lg" dir="rtl">
+    <div className="flex items-center gap-3 px-4 py-2 overflow-x-auto no-scrollbar">
+      <span className="font-bold text-sm text-[#a98136] whitespace-nowrap shrink-0">لوحة تحكم الأصدقاء</span>
       {NAV.map((n) => {
         const isInbox = n.key === 'inbox';
         return (
           <button
             key={n.key}
             onClick={() => setView(n.key)}
-            className={`text-xs px-3 py-1.5 rounded cursor-pointer flex items-center gap-1.5 relative ${
+            className={`text-xs px-3 py-1.5 rounded cursor-pointer flex items-center gap-1.5 relative whitespace-nowrap shrink-0 ${
               view === n.key ? 'bg-[#a98136] text-white font-semibold' : 'text-neutral-700 hover:bg-neutral-100'
             }`}
           >
@@ -226,23 +226,23 @@ const AdminTopBar: React.FC<{
           </button>
         );
       })}
+      <div className="flex-1 shrink-0" />
+      {pushStatus !== 'unsupported' && pushStatus !== 'granted' && (
+        <button onClick={onEnablePush} className="text-xs px-3 py-1.5 rounded bg-[#a98136]/10 hover:bg-[#a98136]/20 text-[#a98136] border border-[#a98136]/30 flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0" title="تفعيل إشعارات المتصفح حتى مع إغلاق الصفحة">
+          <Bell className="w-3.5 h-3.5" /> تفعيل الإشعارات
+        </button>
+      )}
+      {pushStatus === 'granted' && (
+        <button onClick={onTestPush} className="text-xs px-2 py-1.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 border border-emerald-500/20 flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0" title="اختبار وصول الإشعار">
+          <Bell className="w-3 h-3" /> اختبار
+        </button>
+      )}
+      {pushStatus === 'denied' && (
+        <span className="text-[11px] text-red-500 flex items-center gap-1 whitespace-nowrap shrink-0"><BellOff className="w-3 h-3" /> محظور</span>
+      )}
+      {pushStatus === 'granted' && <span className="text-[11px] text-emerald-600 flex items-center gap-1 whitespace-nowrap shrink-0"><Bell className="w-3 h-3" /> مفعّل</span>}
+      <button onClick={onLogout} className="text-xs px-3 py-1.5 rounded bg-neutral-100 hover:bg-red-500/20 hover:text-red-600 cursor-pointer whitespace-nowrap shrink-0">خروج</button>
     </div>
-    <div className="flex-1" />
-    {pushStatus !== 'unsupported' && pushStatus !== 'granted' && (
-      <button onClick={onEnablePush} className="text-xs px-3 py-1.5 rounded bg-[#a98136]/10 hover:bg-[#a98136]/20 text-[#a98136] border border-[#a98136]/30 flex items-center gap-1.5 cursor-pointer" title="تفعيل إشعارات المتصفح حتى مع إغلاق الصفحة">
-        <Bell className="w-3.5 h-3.5" /> تفعيل الإشعارات
-      </button>
-    )}
-    {pushStatus === 'granted' && (
-      <button onClick={onTestPush} className="text-xs px-2 py-1.5 rounded bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 border border-emerald-500/20 flex items-center gap-1 cursor-pointer" title="اختبار وصول الإشعار">
-        <Bell className="w-3 h-3" /> اختبار
-      </button>
-    )}
-    {pushStatus === 'denied' && (
-      <span className="text-[11px] text-red-500 flex items-center gap-1"><BellOff className="w-3 h-3" /> محظور</span>
-    )}
-    {pushStatus === 'granted' && <span className="text-[11px] text-emerald-600 flex items-center gap-1"><Bell className="w-3 h-3" /> مفعّل</span>}
-    <button onClick={onLogout} className="text-xs px-3 py-1.5 rounded bg-neutral-100 hover:bg-red-500/20 hover:text-red-600 cursor-pointer">خروج</button>
   </div>
 );
 
