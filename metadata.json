@@ -1,0 +1,6 @@
+{
+  "name": "Apex Motors - Luxury Dealership & Digital Showroom",
+  "description": "A high-end digital showroom and conversion-focused dealership platform featuring cinematic vehicle showcases, smart filters, finance calculators, 360 virtual galleries, test drive booking, and WhatsApp sales integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,11 @@
+/* Admin-only screen styles (login / inbox / vehicles).
+   Shared classes like .btn, .field-label, .field-input are defined
+   in ../src/index.css — do NOT duplicate them here. */
+
+select.field-input option {
+  background: #0f1115;
+}
+
+select.bg-black\/40 option {
+  background: #0f1115;
+}

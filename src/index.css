@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+/* Explicit content sources so BOTH apps (public site + admin panel)
+   generate the same utilities, regardless of which project builds the CSS */
+@source "../index.html";
+@source "../src";
+@source "../admin/index.html";
+@source "../admin/src";
+
+/* ============================================================
+   AL-ASDIQA MOTORS — Design Tokens (Light)
+   Palette: warm white surfaces · near-black ink · one gold accent
+   Type:    Cairo (display) · Tajawal (body)
+            JetBrains Mono (prices / specs)
+   ============================================================ */
+
+@theme {
+  /* Surfaces */
+  --color-ink: #f7f7f8;
+  --color-surface: #ffffff;
+  --color-raised: #f0f0f2;
+
+  /* Lines */
+  --color-line: rgba(9, 9, 11, 0.08);
+  --color-line-strong: rgba(9, 9, 11, 0.16);
+
+  /* Accent */
+  --color-gold: #a98136;
+  --color-gold-hover: #8f6c28;
+  --color-gold-dim: rgba(169, 129, 54, 0.25);
+
+  /* Type — Cairo for headings · Tajawal for body (elegant Arabic pairing) */
+  --font-display: "Cairo", "Tajawal", "Noto Kufi Arabic", system-ui, sans-serif;
+  --font-body: "Tajawal", "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 112.5%; /* 18px base — scales every rem-based size up globally */
+    background-color: #ffffff;
+    color: #18181b;
+    font-family: var(--font-body);
+  }
+
+  body {
+    background-color: #f7f7f8;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.7;
+    color: #27272a;
+  }
+
+  ::selection {
+    background: #a98136;
+    color: #ffffff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f4f4f5;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d4d4d8;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a1a1aa;
+  }
+
+  :focus-visible {
+    outline: 2px solid #a98136;
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Editorial eyebrow label: small tracked label + hairline rule */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.78125rem;
+    letter-spacing: 0.18em;
+    color: rgba(39, 39, 42, 0.55);
+  }
+  .eyebrow::before {
+    content: "";
+    display: block;
+    width: 1.5rem;
+    height: 1px;
+    background: #a98136;
+  }
+
+  /* Buttons — flat, fixed heights, no gradients */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: background-color 200ms var(--ease-out-quart),
+      border-color 200ms var(--ease-out-quart),
+      color 200ms var(--ease-out-quart),
+      box-shadow 200ms var(--ease-out-quart);
+    white-space: nowrap;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .btn-gold {
+    background: #a98136;
+    color: #ffffff;
+    height: 3rem;
+    padding-inline: 1.75rem;
+    box-shadow: 0 1px 2px rgba(9, 9, 11, 0.08);
+  }
+  .btn-gold:hover:not(:disabled) {
+    background: #8f6c28;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: #27272a;
+    border: 1px solid rgba(9, 9, 11, 0.18);
+    height: 3rem;
+    padding-inline: 1.75rem;
+  }
+  .btn-ghost:hover:not(:disabled) {
+    border-color: rgba(9, 9, 11, 0.45);
+  }
+
+  .btn-sm.btn-gold,
+  .btn-sm.btn-ghost {
+    height: 2.5rem;
+    padding-inline: 1.25rem;
+    font-size: 0.90625rem;
+  }
+
+  /* Arrow micro-interaction */
+  .btn .btn-arrow {
+    transition: transform 220ms var(--ease-out-quart);
+  }
+  .btn:hover .btn-arrow {
+    transform: translateX(-3px); /* RTL site: arrows point left */
+  }
+  [dir="ltr"] .btn:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+
+  /* Hairline divider */
+  .hairline {
+    height: 1px;
+    background: rgba(9, 9, 11, 0.08);
+  }
+
+  /* Form fields — minimal, bottom-hairline style */
+  .field-label {
+    display: block;
+    font-size: 0.84375rem;
+    letter-spacing: 0.06em;
+    color: rgba(39, 39, 42, 0.6);
+    margin-bottom: 0.5rem;
+  }
+  .field-input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(9, 9, 11, 0.15);
+    padding: 0.625rem 0.125rem;
+    color: #18181b;
+    font-family: inherit;
+    font-size: 1.03125rem;
+    transition: border-color 220ms var(--ease-out-quart);
+  }
+  .field-input::placeholder {
+    color: rgba(39, 39, 42, 0.32);
+  }
+  .field-input:focus {
+    outline: none;
+    border-bottom-color: #a98136;
+  }
+
+  select.field-input {
+    appearance: none;
+    cursor: pointer;
+    border: 1px solid rgba(9, 9, 11, 0.12);
+    padding: 0.625rem 0.875rem;
+    background-color: #ffffff !important;
+    color: #18181b !important;
+    color-scheme: light;
+  }
+
+  /* Light dropdown lists (native option popups) — force light even on dark OS */
+  select.field-input option,
+  select.field-input optgroup,
+  select option,
+  select optgroup {
+    background-color: #ffffff !important;
+    color: #18181b !important;
+    color-scheme: light;
+  }
+  select.field-input option:checked,
+  select.field-input option:hover,
+  select option:checked,
+  select option:hover {
+    background-color: #faf6ec !important;
+    color: #a98136 !important;
+  }
+
+  /* Admin editor selects (inputCls) also need light scheme */
+  select.bg-white {
+    color-scheme: light;
+    background-color: #ffffff !important;
+    color: #18181b !important;
+  }
+  select.bg-white option {
+    background-color: #ffffff !important;
+    color: #18181b !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
