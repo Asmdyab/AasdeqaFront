@@ -52,6 +52,7 @@ export interface Vehicle {
   previousOwners: number;
   warranty: string;
   createdAt: string;
+  databaseId?: number; // actual database ID from API (for form submissions)
 }
 
 export interface VehicleFilterState {

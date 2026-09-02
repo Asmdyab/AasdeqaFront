@@ -40,8 +40,7 @@ export const InspectionModal: React.FC = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const vehicleIndex = vehicles.findIndex((v:any)=>v.id===selectedCarId);
-      await submitInspection({ vehicleId: vehicleIndex>=0?vehicleIndex+1:null, name, phone, preferredDate: date, preferredTime: time, notes: notes||undefined });
+      await submitInspection({ vehicleId: selectedVehicleObj?.databaseId ?? null, name, phone, preferredDate: date, preferredTime: time, notes: notes||undefined });
       setBookingRef(`APX-IN-${Math.floor(100000+Math.random()*900000)}`);
       setIsSuccess(true);
     } catch {

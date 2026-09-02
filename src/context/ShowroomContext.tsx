@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback, ReactNode } from 'react';
 import { Vehicle, VehicleFilterState } from '../types/vehicle';
-import { VEHICLES_DATA } from '../data/vehicles';
 import { DEALERSHIP_INFO, DEALERSHIP_BRANDS, CUSTOMER_REVIEWS } from '../data/dealership';
 import { ARABIC_TRANSLATIONS, Translations } from '../i18n/translations';
-import { VEHICLE_ARABIC_MAP } from '../i18n/vehicleTranslations';
 import {
   fetchContent,
   fetchVehicles,
@@ -109,12 +107,11 @@ export const ShowroomProvider: React.FC<{ children: ReactNode }> = ({ children }
     document.documentElement.dir = 'rtl';
   }, []);
 
-  const [vehicles, setVehicles] = useState<Vehicle[]>(VEHICLES_DATA);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [currentView, setCurrentView] = useState<AppView>('home');
 
-  // CMS content loaded from the backend (null = offline, fall back to bundled data)
+  // CMS content loaded from the backend
   const [cmsContent, setCmsContent] = useState<ContentBlocks | null>(null);
-  const [dataSource, setDataSource] = useState<'bundled' | 'api'>('bundled');
 
   const [brands, setBrands] = useState<Brand[]>(() =>
     DEALERSHIP_BRANDS.map((b, i) => ({
@@ -165,7 +162,6 @@ export const ShowroomProvider: React.FC<{ children: ReactNode }> = ({ children }
     if (signal?.aborted) return;
     if (apiVehicles && apiVehicles.length > 0) {
       setVehicles(apiVehicles);
-      setDataSource('api');
     }
     if (apiBrands && apiBrands.length > 0) {
       setBrands(apiBrands.map(b => ({
@@ -277,31 +273,10 @@ export const ShowroomProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [favoritesDrawerOpen, setFavoritesDrawerOpen] = useState(false);
 
-  // Helper to localize individual vehicle data.
-  // When vehicles come from the API they are already admin-managed Arabic
-  // content, so the bundled static map must NOT override them.
+  // API vehicles already have localized Arabic content from admin
   const getLocalizedVehicle = useMemo(() => {
-    return (v: Vehicle): Vehicle => {
-      if (dataSource === 'api') return v;
-
-      const arData = VEHICLE_ARABIC_MAP[v.id];
-      if (!arData) return v;
-
-      return {
-        ...v,
-        model: arData.model || v.model,
-        trim: arData.trim || v.trim,
-        engine: arData.engine || v.engine,
-        tagline: arData.tagline || v.tagline,
-        description: arData.description || v.description,
-        exteriorColor: arData.exteriorColor || v.exteriorColor,
-        interiorColor: arData.interiorColor || v.interiorColor,
-        keyHighlights: arData.keyHighlights || v.keyHighlights,
-        features: arData.features || v.features,
-        warranty: arData.warranty || v.warranty
-      };
-    };
-  }, [dataSource]);
+    return (v: Vehicle): Vehicle => v;
+  }, []);
 
   const formatPrice = (amount: number) => {
     // \u2066...\u2069 = invisible LTR isolate. It hard-locks the visual order

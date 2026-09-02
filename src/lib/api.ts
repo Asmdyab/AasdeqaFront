@@ -72,6 +72,7 @@ interface ApiVehicle {
 function mapVehicle(v: ApiVehicle): Vehicle {
   return {
     id: v.slug,
+    databaseId: v.id,
     slug: v.slug,
     brand: v.brand,
     model: v.model,

@@ -36,9 +36,8 @@ export const PurchaseModal: React.FC = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      const vehicleIndex = vehicles.findIndex((v: any) => v.id === selectedCarId);
       await submitPurchase({
-        vehicleId: vehicleIndex >= 0 ? vehicleIndex + 1 : null,
+        vehicleId: selectedVehicleObj?.databaseId ?? null,
         requestType,
         rentalDuration: requestType === 2 ? rentalDuration : undefined,
         name, phone, notes: notes || undefined
