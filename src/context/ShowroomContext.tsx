@@ -316,9 +316,9 @@ export const ShowroomProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [favorites, setFavorites] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('apex_showroom_favorites');
-      return saved ? JSON.parse(saved) : ['porsche-911-gt3-rs-2025', 'ferrari-296-gtb-assetto-fiorano-2025'];
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      return ['porsche-911-gt3-rs-2025', 'ferrari-296-gtb-assetto-fiorano-2025'];
+      return [];
     }
   });
 
