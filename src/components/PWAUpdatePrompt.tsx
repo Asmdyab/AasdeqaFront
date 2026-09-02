@@ -38,7 +38,7 @@ export const PWAUpdatePrompt: React.FC = () => {
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[300] bg-neutral-900 text-white text-xs px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 max-w-[90vw]" dir="rtl">
       <RefreshCw className="w-4 h-4 text-[#a98136] shrink-0" />
       <span>يتوفر تحديث جديد — حدّث الآن</span>
-      <button onClick={() => { applyPWAUpdate(); caches.keys().then(ks => Promise.all(ks.map(k => caches.delete(k)))).then(() => { const u = new URL(window.location.href); u.searchParams.set('_sw', Date.now().toString()); window.location.replace(u.toString()); }); }} className="bg-[#a98136] text-white px-3 py-1.5 rounded font-semibold hover:brightness-110 cursor-pointer">تحديث</button>
+      <button onClick={() => { navigator.serviceWorker.getRegistration().then(r => r?.unregister()).then(() => window.location.reload()); }} className="bg-[#a98136] text-white px-3 py-1.5 rounded font-semibold hover:brightness-110 cursor-pointer">تحديث</button>
       <button onClick={() => setNeedRefresh(false)} className="p-1 hover:bg-white/20 rounded-full cursor-pointer"><X className="w-3 h-3" /></button>
     </div>
   );
